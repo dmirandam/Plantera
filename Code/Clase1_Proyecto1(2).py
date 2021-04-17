@@ -47,14 +47,6 @@ class Plant:
                         self.lastWatering = 0
 
 
-
-
-
-
-
-
-
-
 f = int(input('Cada cuantos dias debe ser regada la planta? : '))
 l = int(input('Hace cuanto regó la planta? : '))
 
