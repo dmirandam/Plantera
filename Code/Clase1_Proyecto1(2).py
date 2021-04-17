@@ -25,6 +25,8 @@ class Plant:
                 else:
                     rep_2 = 0
                     while rep_2 == 0 :
+                        time.sleep(1)
+                        print ("*Un dia despues*")
                         rep_2 = int(input("Ya? \n 1. Si \n 0. No \n"))
                     if rep_2 == 1:
                         self.lastWatering = 0
@@ -42,6 +44,8 @@ class Plant:
                 else:
                     rep_2 = 0
                     while rep_2 == 0 :
+                        time.sleep(1)
+                        print ("*Un dia despues*")
                         rep_2 = int(input("Ya? \n 1. Si \n 0. No \n"))
                     if rep_2 == 1:
                         self.lastWatering = 0
