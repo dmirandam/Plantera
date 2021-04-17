@@ -39,7 +39,6 @@ class Plant:
                 if self.needWatering == False:
                     #self.notif("Agua")
                     self.needWatering = True
-                self.needWatering == True#Extra, borrar
             self.lastWatering += 1
         #Si ya se regó
         else:

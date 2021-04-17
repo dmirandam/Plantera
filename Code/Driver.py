@@ -21,16 +21,15 @@ elif dem == 1:
 ####---------> Interacción paso de tiempo rápido
 time0 = time.time()
 print(time.time()-time0)
-print("need ","last ","frequency")
+print("hour")
 while(time.time()-time0 < 24): #Los segundos en un día
     
-    #print(rose.needWatering,rose.lastWatering, rose.frequencyWatering)
+    print(time.time()-time0)
     #Implementando lo de Miranda, después se implementa la pila
     #Se debe hacer lo mismo con cada parámetro
     if(rose.needWatering):
         n = int(input("Regar a Rose: Lo hago despues (0) Ya lo hice (1):"))
         if n==1: rose.doneWatering = True
-        #
     rose.updateLastWatering()
     time.sleep(1)
     # Pasa un segundo que contamos como una hora
