@@ -1,52 +1,37 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 15 17:10:16 2021
-
-@author: mbotello
-"""
 
 class Plant:
 
-    def check(self):
+    def check(self): #Revisar si se creo algo
         print("exists")
-    #Esto es para ofrecer un demo
-    def __init__(self):
-        self.name = "Rose"
-        self.frecuencyWatering = 168 #Hours in a week
-        self.lastWatering = 24 #a day ago
-        if self.frecuencyWatering < self.lastWatering:
-            self.needWatering = True
-        else: self.needWatering = False
-        self.doneWatering = False
 
     #Parametrized constructor
     def __init__(self, n, f,s):
-        self.name = n
+        self.name = n 
         self.frequencyWatering = int(f)
         self.lastWatering = int(s)
         if self.frequencyWatering < self.lastWatering:
             self.needWatering = True
         else:
             self.needWatering = False #Para notificar una única vez
-            self.doneWatering = False #Para diferenciar el tiempo de la notificación al de la regada
-
-    #Llamado cada hora o cuando se riega
+        self.doneWatering = False #Para diferenciar el tiempo de la entrada y la salida de la cola
 
     def updateLastWatering(self):
         if self.doneWatering == False:
-            if self.frequencyWatering < self.lastWatering:
+            if self.frequencyWatering <= self.lastWatering: #Entonces sí se necesita agua
                 print("         needWatering")
                 if self.needWatering == False:
                     #self.notif("Agua")
                     self.needWatering = True
             self.lastWatering += 1
         #Si ya se regó
-        else:
+        else: #doneWaterinf==True
             self.lastWatering = 0
             self.doneWatering = False
             self.needWatering = False
 
-    #Notificaciones, se organizan en pilas
+    #Notificaciones, se organizan en colas
     #def notif(str,num):
 
+    # CRUD se implementa por fuera
         
