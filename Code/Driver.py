@@ -1,26 +1,21 @@
 import module1
+import module2
 import time
+import keyboard
 #Ahora se pueden manejar cuántos parámetros se quiera por planta.
 #Los parámetros se guardan en una lista
-#Cada paámetro es una lista que contiene a los siguientes
-#    param[i] es el parámetro i
-#    param[i][0] <- nombre del parámetro, nueva variable
-#    param[i][1] <- frequencyWatering
-#    param[i][2] <- lastWatering
-#    param[i][3] <- needWatering
-#    param[i][4] <- doneWatering
 
-dem = int(input("Quieres un DEMO (0) o quieres comenzar de una (1)? "))
 
-if dem == 0:#DEMO
-    print("Creamos una nueva planta llamada Rose ",
-          "con un solo parámetro: Agua 5 3")
-    plant1 = module1.Plant("Rose", 2,
-                           [["Agua", 5, 3, False, False],
-                            ["Tierra", 5, 3, False, False]])
-elif dem == 1:#Ingresar datos uno por uno
-    #Me parece mejor pasar la info completa a la clase
-    #Con eso se puede pasar fácilmente la info en un archivo
+#El ejemplo literal de keyboard no funciona
+#def on_triggered():
+#	print("Triggered!")
+#keyboard.add_hotkey('k', on_triggered)
+
+#keyboard.is_pressed('space')
+person1 = module2.Person([])
+
+ans = int(input("¿Cuántas plantas quieres añadir? "))
+for i in range(ans):
     print("Hola, vamos a indexar una nueva planta")
 
     namePlant = input("¿Cómo se llama la nueva planta? ")
@@ -37,18 +32,24 @@ elif dem == 1:#Ingresar datos uno por uno
         paramPlant.append( [nameParam, frequencyParam, lastParam, frequencyParam <= lastParam, False])
     
     plant1 = module1.Plant(namePlant,numParam, paramPlant)
-    
+    person1.Create(plant1)
+person1.Read(namePlant)
+person1.Delete(namePlant)
     
 ####---------> Interacción paso de tiempo rápido
 
 for hour in range(24):
     print(hour)
-
-    for i in range(plant1.numberParam):
-        if(plant1.param[i][3]): #Cada parámetro de cada planta
-            n = int(input(str(plant1.param[i][0])+" a " + plant1.name + 
-                          ": Lo hago despues (0) Ya lo hice (1):"))
-            if n==1: plant1.param[i][4] = True
-        plant1.updateParameteri(i)
+    ran = len(person1.plantArray) #Si hay 1000 plantas es costoso calcular len() cada vez
+    for j in range(ran):
+        #if keyboard.on_press('l'):
+         #   print("k was pressed")
+        for i in range(person1.plantArray[j].numberParam):
+            if(person1.plantArray[j].param[i][3]): #Cada parámetro de cada planta
+                n = int(input(str(person1.plantArray[j].param[i][0])+" a " + 
+                              person1.plantArray[j].name + 
+                              ": Lo hago despues (0) Ya lo hice (1):"))
+                if n==1: person1.plantArray[j].param[i][4] = True
+            person1.plantArray[j].updateParameteri(i)
     time.sleep(1)
     # Pasa un segundo que contamos como una hora
