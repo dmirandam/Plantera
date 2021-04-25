@@ -2,39 +2,64 @@ import module1
 import module2
 import time
 import keyboard
-#Ahora se pueden manejar cuántos parámetros se quiera por planta.
-#Los parámetros se guardan en una lista
 
 
-#El ejemplo literal de keyboard no funciona
-#def on_triggered():
-#	print("Triggered!")
-#keyboard.add_hotkey('k', on_triggered)
-
-#keyboard.is_pressed('space')
 person1 = module2.Person([])
+
+def Usuario_Nueva_Planta():
+    for i in range(ans):
+        print("Hola, vamos a indexar una nueva planta")
+    
+        namePlant = input("¿Cómo se llama la nueva planta? ")
+        numParam = int(input("Cuántos parámetros tiene la nueva planta? "))
+        paramPlant = [] #Va a guardar todos los parámetros de la planta
+        
+        #Guarda cada parámetro
+        for i in range (numParam):
+            nameParam = input("Cómo se llama el parámetro " + str(i) + "? ")
+            frequencyParam = int(input("Cada cuántas horas se lleva a cabo " + nameParam + "? "))
+            lastParam = int(input("Cuándo fue la última vez que se llevó a cabo " + nameParam +"? "))
+            
+            #Lo que antes era: name, frequencyWatering, lastWatering, needWatering, doneWatering
+            paramPlant.append( [nameParam, frequencyParam, lastParam, frequencyParam <= lastParam, False])
+        
+        plant1 = module1.Plant(namePlant,numParam, paramPlant)
+        person1.Create(plant1)
+        
+#Ya sirvió esto duh
+def on_triggered():
+    #Está tomando todo lo que está escrito después (en la consola) como input
+    #Por eso saca TypeError:raw_input() takes from 1 to 2 positional arguments but 5 were given
+    an = input("¿Qué quiere hacer? \n",
+       " Crear nueva planta (c)"
+       " Actualizar planta existente (a)",
+       " Eliminar planta existente (e)",
+       " Leer planta existente (l)")
+    if (an == 'c'): 
+        Usuario_Nueva_Planta()
+    elif(an == 'a'):
+        ak = input("¿Cómo se llama la planta que quieres actualizar?: ")
+        person1.Update(ak)
+    elif(an == 'e'):
+        ak = input("¿Cómo se llama la planta que quieres eliminar?: ")
+        person1.Delete(ak)
+    elif(an == 'l'):
+        ak = input("¿Cómo se llama la planta que quieres leer?: ")
+        person1.Read(ak)
+    else: 
+        print("No se entendió la respuesta, sigue el código")
+    
+keyboard.add_hotkey('k', on_triggered)
+
+keyboard.is_pressed('space')
+
 
 ans = int(input("¿Cuántas plantas quieres añadir? "))
 for i in range(ans):
-    print("Hola, vamos a indexar una nueva planta")
+    Usuario_Nueva_Planta()
 
-    namePlant = input("¿Cómo se llama la nueva planta? ")
-    numParam = int(input("Cuántos parámetros tiene la nueva planta? "))
-    paramPlant = [] #Va a guardar todos los parámetros de la planta
-    
-    #Guarda cada parámetro
-    for i in range (numParam):
-        nameParam = input("Cómo se llama el parámetro " + str(i) + "? ")
-        frequencyParam = int(input("Cada cuántas horas se lleva a cabo " + nameParam + "? "))
-        lastParam = int(input("Cuándo fue la última vez que se llevó a cabo " + nameParam +"? "))
-        
-        #Lo que antes era: name, frequencyWatering, lastWatering, needWatering, doneWatering
-        paramPlant.append( [nameParam, frequencyParam, lastParam, frequencyParam <= lastParam, False])
-    
-    plant1 = module1.Plant(namePlant,numParam, paramPlant)
-    person1.Create(plant1)
-person1.Read(namePlant)
-person1.Delete(namePlant)
+##person1.Read(namePlant)
+##person1.Delete(namePlant)
     
 ####---------> Interacción paso de tiempo rápido
 
