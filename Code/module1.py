@@ -26,7 +26,7 @@ class Plant:
     def updateParameteri(self,i):
         #Exactamente igual a updateWatering, solo se cambiaron los nombres correspondientes
         if self.param[i][4] == False:
-            if self.param[i][1] <= self.param[i][2]-1: #Entonces sí se necesita agua
+            if self.param[i][1]-3 < self.param[i][2]: #Entonces sí se necesita agua
                 print("         need"+str(self.param[i][0])+" next hour")
                 if self.param[i][3] == False:
                     #self.notif("Agua")
