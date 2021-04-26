@@ -27,27 +27,10 @@ def Usuario_Nueva_Planta():
         person1.Create(plant1)
         
 #Ya sirvió esto duh
+boolChange = False
 def on_triggered():
-    #Está tomando todo lo que está escrito después (en la consola) como input
-    #Por eso saca TypeError:raw_input() takes from 1 to 2 positional arguments but 5 were given
-    an = input("¿Qué quiere hacer? \n",
-       " Crear nueva planta (c)"
-       " Actualizar planta existente (a)",
-       " Eliminar planta existente (e)",
-       " Leer planta existente (l)")
-    if (an == 'c'): 
-        Usuario_Nueva_Planta()
-    elif(an == 'a'):
-        ak = input("¿Cómo se llama la planta que quieres actualizar?: ")
-        person1.Update(ak)
-    elif(an == 'e'):
-        ak = input("¿Cómo se llama la planta que quieres eliminar?: ")
-        person1.Delete(ak)
-    elif(an == 'l'):
-        ak = input("¿Cómo se llama la planta que quieres leer?: ")
-        person1.Read(ak)
-    else: 
-        print("No se entendió la respuesta, sigue el código")
+    boolChange = True
+    print("wtf", boolChange)
     
 keyboard.add_hotkey('k', on_triggered)
 
@@ -64,8 +47,32 @@ for i in range(ans):
 ####---------> Interacción paso de tiempo rápido
 
 for hour in range(24):
-    print(hour)
+    print(hour, boolChange)
     ran = len(person1.plantArray) #Si hay 1000 plantas es costoso calcular len() cada vez
+    
+    if (boolChange == True):
+        print("hey")
+        boolChange = False
+        #Está tomando todo lo que está escrito después (en la consola) como input
+        #Por eso saca TypeError:raw_input() takes from 1 to 2 positional arguments but 5 were given
+        an = input("¿Qué quiere hacer? \n",
+           " Crear nueva planta (c)"
+           " Actualizar planta existente (a)",
+           " Eliminar planta existente (e)",
+           " Leer planta existente (l)")
+        if (an == 'c'): 
+            Usuario_Nueva_Planta()
+        elif(an == 'a'):
+            ak = input("¿Cómo se llama la planta que quieres actualizar?: ")
+            person1.Update(ak)
+        elif(an == 'e'):
+            ak = input("¿Cómo se llama la planta que quieres eliminar?: ")
+            person1.Delete(ak)
+        elif(an == 'l'):
+            ak = input("¿Cómo se llama la planta que quieres leer?: ")
+            person1.Read(ak)
+        else: 
+            print("No se entendió la respuesta, sigue el código")
     for j in range(ran):
         #if keyboard.on_press('l'):
          #   print("k was pressed")
