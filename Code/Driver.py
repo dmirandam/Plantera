@@ -1,10 +1,12 @@
 import module1
 import module2
 import time
-import keyboard
+#import keyboard
 
 
 person1 = module2.Person([])
+
+colaNotif = {}
 
 def Usuario_Nueva_Planta():
     for i in range(ans):
@@ -27,14 +29,14 @@ def Usuario_Nueva_Planta():
         person1.Create(plant1)
         
 #Ya sirvió esto duh
-boolChange = False
-def on_triggered():
-    boolChange = True
-    print("wtf", boolChange)
+#boolChange = False
+#def on_triggered():
+#    boolChange = True
+#    print("wtf", boolChange)
     
-keyboard.add_hotkey('k', on_triggered)
+#keyboard.add_hotkey('k', on_triggered)
 
-keyboard.is_pressed('space')
+#keyboard.is_pressed('space')
 
 
 ans = int(input("¿Cuántas plantas quieres añadir? "))
@@ -49,8 +51,8 @@ for i in range(ans):
 for hour in range(24):
     print(hour, boolChange)
     ran = len(person1.plantArray) #Si hay 1000 plantas es costoso calcular len() cada vez
-    
-    if (boolChange == True):
+    change = int(input("¿Quieres cambiar algo? (0) no (1) sí"))
+    if (change == 1):
         print("hey")
         boolChange = False
         #Está tomando todo lo que está escrito después (en la consola) como input
