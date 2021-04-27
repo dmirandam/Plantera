@@ -2,6 +2,12 @@ import module1
 import module2
 import time
 #import keyboard
+""" Integrantes:
+    Maria Sol Botello Leon 
+    Juan David Yara Cancelada 
+    Johhan Steven Maldonado Benavides
+    David Santiago Miranda Martinez
+     """
 
 
 person1 = module2.Person([])
