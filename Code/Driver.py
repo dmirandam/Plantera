@@ -2,10 +2,11 @@ import module1
 import module2
 import time
 #import keyboard
-""" Integrantes:
+"""     Integrantes:
     Maria Sol Botello Leon 
     Juan David Yara Cancelada 
     Johhan Steven Maldonado Benavides
+    Camilo Apraez
     David Santiago Miranda Martinez
      """
 
