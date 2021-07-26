@@ -5,7 +5,6 @@ import time
     Maria Sol Botello Leon 
     Juan David Yara Cancelada 
     Johhan Steven Maldonado Benavides
-    Camilo Apraez
     David Santiago Miranda Martinez
 """
 
