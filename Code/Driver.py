@@ -1,21 +1,43 @@
 import module1
 import module2
 import time
-#import keyboard
 """     Integrantes:
     Maria Sol Botello Leon 
     Juan David Yara Cancelada 
     Johhan Steven Maldonado Benavides
     Camilo Apraez
     David Santiago Miranda Martinez
-     """
+"""
 
 
-person1 = module2.Person([])
+person1 = module1.Person([])
 
 colaNotif = {}
-
 def Usuario_Nueva_Planta():
+    for i in range(ans):
+        print("Hola, vamos a indexar una nueva planta")
+        namePlant = input("¿Cómo se llama la nueva planta? ")
+        numParam = int(input("¿Cuántos parámetros tiene la nueva planta? "))
+        Plant1 = module1.Plant() #Va a guardar todos los parámetros de la planta
+        
+        for i in range (numParam):
+            nameParam = input("¿Cómo se llama el parámetro " + str(i) + "? ")
+            frequencyParam = int(input("¿Cada cuántas horas se lleva a cabo " + nameParam + "? "))
+            lastParam = int(input("¿Cuándo fue la última vez que se llevó a cabo " + nameParam +"? "))
+            paramTem = module1.LinkedList()
+            paramTem.pushBack(nameParam)
+            paramTem.pushBack(frequencyParam)
+            paramTem.pushBack(lastParam)
+            paramTem.pushBack(frequencyParam <= lastParam)
+            paramTem.pushBack(False)
+            
+            Plant1.pushBack(paramTem)
+            
+        
+        person1.Create(plant1)
+        
+
+def Usuario_Nueva_Planta1():
     for i in range(ans):
         print("Hola, vamos a indexar una nueva planta")
     
@@ -35,40 +57,25 @@ def Usuario_Nueva_Planta():
         plant1 = module1.Plant(namePlant,numParam, paramPlant)
         person1.Create(plant1)
         
-#Ya sirvió esto duh
-#boolChange = False
-#def on_triggered():
-#    boolChange = True
-#    print("wtf", boolChange)
-    
-#keyboard.add_hotkey('k', on_triggered)
-
-#keyboard.is_pressed('space')
 
 
 ans = int(input("¿Cuántas plantas quieres añadir? "))
-for i in range(ans):
-    Usuario_Nueva_Planta()
-
-##person1.Read(namePlant)
-##person1.Delete(namePlant)
+Usuario_Nueva_Planta()
     
 ####---------> Interacción paso de tiempo rápido
 
 for hour in range(24):
-    print(hour, boolChange)
-    ran = len(person1.plantArray) #Si hay 1000 plantas es costoso calcular len() cada vez
-    change = int(input("¿Quieres cambiar algo? (0) no (1) sí"))
+    print(hour)
+    ran = person1.len() #Si hay 1000 plantas es costoso calcular len() cada vez
+    change = int(input("¿Quieres cambiar algo? (0) no (1) sí \n"))
     if (change == 1):
-        print("hey")
         boolChange = False
-        #Está tomando todo lo que está escrito después (en la consola) como input
-        #Por eso saca TypeError:raw_input() takes from 1 to 2 positional arguments but 5 were given
-        an = input("¿Qué quiere hacer? \n",
-           " Crear nueva planta (c)"
-           " Actualizar planta existente (a)",
-           " Eliminar planta existente (e)",
+        print("¿Qué quiere hacer? \n",
+           " Crear nueva planta (c) \n" 
+           " Actualizar planta existente (a) \n",
+           " Eliminar planta existente (e)\n",
            " Leer planta existente (l)")
+        an = input()
         if (an == 'c'): 
             Usuario_Nueva_Planta()
         elif(an == 'a'):
@@ -83,8 +90,6 @@ for hour in range(24):
         else: 
             print("No se entendió la respuesta, sigue el código")
     for j in range(ran):
-        #if keyboard.on_press('l'):
-         #   print("k was pressed")
         for i in range(person1.plantArray[j].numberParam):
             if(person1.plantArray[j].param[i][3]): #Cada parámetro de cada planta
                 n = int(input(str(person1.plantArray[j].param[i][0])+" a " + 
