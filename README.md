@@ -1,2 +1,2 @@
-# ProyectoDataStructures
+# Plantera
 Proyecto DS
