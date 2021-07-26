@@ -1,5 +1,5 @@
 import module1
-import module2
+
 import time
 """     Integrantes:
     Maria Sol Botello Leon 
@@ -10,15 +10,13 @@ import time
 """
 
 
-person1 = module1.Person([])
 
-colaNotif = {}
 def Usuario_Nueva_Planta():
     for i in range(ans):
         print("Hola, vamos a indexar una nueva planta")
         namePlant = input("¿Cómo se llama la nueva planta? ")
         numParam = int(input("¿Cuántos parámetros tiene la nueva planta? "))
-        Plant1 = module1.Plant() #Va a guardar todos los parámetros de la planta
+        Plant1 = module1.Plant(namePlant,numParam) #Va a guardar todos los parámetros de la planta
         
         for i in range (numParam):
             nameParam = input("¿Cómo se llama el parámetro " + str(i) + "? ")
@@ -32,9 +30,7 @@ def Usuario_Nueva_Planta():
             paramTem.pushBack(False)
             
             Plant1.pushBack(paramTem)
-            
-        
-        person1.Create(plant1)
+        person1.Create(Plant1)
         
 
 def Usuario_Nueva_Planta1():
@@ -58,6 +54,7 @@ def Usuario_Nueva_Planta1():
         person1.Create(plant1)
         
 
+person1 = module1.Person()
 
 ans = int(input("¿Cuántas plantas quieres añadir? "))
 Usuario_Nueva_Planta()
@@ -90,12 +87,14 @@ for hour in range(24):
         else: 
             print("No se entendió la respuesta, sigue el código")
     for j in range(ran):
-        for i in range(person1.plantArray[j].numberParam):
-            if(person1.plantArray[j].param[i][3]): #Cada parámetro de cada planta
-                n = int(input(str(person1.plantArray[j].param[i][0])+" a " + 
-                              person1.plantArray[j].name + 
+        a = person1.get(j).key.NumberParam
+        for i in range(a):
+            b = person1.get(j).key.get(i).key
+            if(b.get(3).key): #Cada parámetro de cada planta
+                n = int(input(str(b.get(0).key)+" a " + 
+                              person1.get(j).key.Name + 
                               ": Lo hago despues (0) Ya lo hice (1):"))
-                if n==1: person1.plantArray[j].param[i][4] = True
-            person1.plantArray[j].updateParameteri(i)
+                if n==1: b.get(4).key = True
+            person1.get(j).key.UpdateParam(i)
     time.sleep(1)
-    # Pasa un segundo que contamos como una hora
+    # Pasa un segundo que contamos como una hora 

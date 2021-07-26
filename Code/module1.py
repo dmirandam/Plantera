@@ -152,51 +152,60 @@ class Plant(LinkedList):
 
     #Notificaciones, se organizan en colas
     #def notif(str,num):
-class Person1(LinkedList()):
+    
+class Person(LinkedList):
     def __init__(self):
         super().__init__()
     def Create(self,plant):
         self.pushBack(plant)
-    def Read(self,string):
-        a = self.Search(string)
-        print =("La planta con nombre", a.string, "y parámetros", printList(self))# Imprimir parámetros bien
-    def Update(self,string):
-        planta = self.Search(string)
+    def Read(self,s):
+        a = self.Search(s)
+        
+        print ("La planta con nombre", s, "y parámetros", self.get(a).key.printList(True))
+        # Imprimir parámetros bien Person.get(a).key
 
-        print("¿que parametro quieres actualizar de ",  planta.key,"?")
+    def Update(self, s):
+        a = self.Search(s)
+        planta = self.get(a).key
+        print("¿que parametro quieres actualizar de ",  planta.Name,"?")
 
         for i in range(planta.len()):
-          print(str(i+1)+")", planta.get(i).key)
+          print(str(i+1)+")", planta.get(i).key.get(0).key)
           
         parametro = int(input())
-        if parametro > p.numberParam or parametro < 0:
+        if parametro > planta.len() or parametro < 0:
           print("Parametro inexistente, no se actualizo la planta")
+
         else:
           print("¿Que desea cambiar? \n 1) Nombre del parametro \n 2) frecuencia de realizacion \n")
           decision = int(input())
           if decision <= 0 or decision > 2:
             print("No se entendio la respuesta, no se actualizo el parametro")
+
           else:
             if decision == 1:
               print("Inserte nuevo nombre del parametro:")
               nombre = input()
-              self.plantArray[nuevo].param[parametro - 1][0] = nombre
+              print(planta.get(parametro))
+              planta.get(parametro).key.get(0).key = nombre
             else:
               print("Inserte nueva frecuencia de realizacion")
               frecuencia = int(input())
-              self.plantArray[nuevo].param[parametro - 1][1] = frecuencia 
+              planta.get(parametro).key.get(1).key = frecuencia
         
-    def Search(self, string):
-        ran = len(self)
+    def Search(self, s):
+        ran = self.len()
         plantTem = self.head
         for i in range(ran):
-          if (string == self.plantTem.name):
+          if (s == plantTem.key.Name):
             return i
+          plantTem = plantTem.next
+    
     def Delete(self, n):
-      if(type(n) == "int"):
+      if(type(n) == type(0)):
         self.remove(n)
-      elif(type(n) == "str"):
-        self.remove(self.Search(string))
+      elif(type(n) == type("a")):
+        self.remove(self.Search(n))
       else: print("Can´t delete by", type (n))
        
 
