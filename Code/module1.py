@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
-
-
 class Node:
     def __init__(self, key=None):
         self.key = key
@@ -72,20 +68,7 @@ class LinkedList:
             val.next = NewNode
             NewNode.previous = val
 
-    def printList(self, bool):
-        if (self.head == None):
-            return
-        val = self.head
-        out = ""
-        while (val.next is not None):
-            out += str(val.key) + " "
-            val = val.next
-        out += str(val.key)
-        if (bool):
-            out += " "
-            print(out)
-        else:
-            print(out, end="")
+  
     def len(self):
       val = self.head
       num = 0
@@ -158,12 +141,18 @@ class Person(LinkedList):
         super().__init__()
     def Create(self,plant):
         self.pushBack(plant)
+    
     def Read(self,s):
+      try:
         a = self.Search(s)
-        
-        print ("La planta con nombre", s, "y parámetros", self.get(a).key.printList(True))
-        # Imprimir parámetros bien Person.get(a).key
-
+        print ("La planta con nombre", s, "y parámetros: ")
+        planta = self.get(a).key
+        for i in range(planta.len()):
+          print(str(i+1)+")", planta.get(i).key.get(0).key)
+        # Imprimir parámetros bien Person.get(a).keyself.get(a).key.printList(True)
+      except:
+        print("Planta no registrada")
+  
     def Update(self, s):
         a = self.Search(s)
         planta = self.get(a).key
@@ -186,12 +175,11 @@ class Person(LinkedList):
             if decision == 1:
               print("Inserte nuevo nombre del parametro:")
               nombre = input()
-              print(planta.get(parametro))
-              planta.get(parametro).key.get(0).key = nombre
+              planta.get(parametro-1).key.get(0).key = nombre
             else:
               print("Inserte nueva frecuencia de realizacion")
               frecuencia = int(input())
-              planta.get(parametro).key.get(1).key = frecuencia
+              planta.get(parametro-1).key.get(1).key = frecuencia
         
     def Search(self, s):
         ran = self.len()
@@ -202,11 +190,13 @@ class Person(LinkedList):
           plantTem = plantTem.next
     
     def Delete(self, n):
-      if(type(n) == type(0)):
-        self.remove(n)
-      elif(type(n) == type("a")):
-        self.remove(self.Search(n))
-      else: print("Can´t delete by", type (n))
+        for i in range(self.len()):
+          if self.get(i).key.Name == n:
+            self.remove(i)
+            break
+          else:
+            ("Esa planta no esta registrada")
+        print('planta eliminada')
        
 
 ''''
