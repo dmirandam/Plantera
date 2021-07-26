@@ -62,7 +62,7 @@ Usuario_Nueva_Planta()
 ####---------> Interacción paso de tiempo rápido
 
 for hour in range(24):
-    print(hour)
+    print("Hora :",hour)
     ran = person1.len() #Si hay 1000 plantas es costoso calcular len() cada vez
     change = int(input("¿Quieres cambiar algo? (0) no (1) sí \n"))
     if (change == 1):
@@ -87,14 +87,18 @@ for hour in range(24):
         else: 
             print("No se entendió la respuesta, sigue el código")
     for j in range(ran):
-        a = person1.get(j).key.NumberParam
-        for i in range(a):
-            b = person1.get(j).key.get(i).key
-            if(b.get(3).key): #Cada parámetro de cada planta
-                n = int(input(str(b.get(0).key)+" a " + 
-                              person1.get(j).key.Name + 
-                              ": Lo hago despues (0) Ya lo hice (1):"))
-                if n==1: b.get(4).key = True
-            person1.get(j).key.UpdateParam(i)
+      try:
+          a = person1.get(j).key.NumberParam
+          for i in range(a):
+              b = person1.get(j).key.get(i).key
+              
+              if(b.get(3).key): #Cada parámetro de cada planta
+                  n = int(input(str(b.get(0).key)+" a " + 
+                                person1.get(j).key.Name + 
+                                ": Lo hago despues (0) Ya lo hice (1):"))
+                  if n==1: b.get(4).key = True
+              person1.get(j).key.UpdateParam(i)
+      except:
+        pass
     time.sleep(1)
     # Pasa un segundo que contamos como una hora 
