@@ -1,6 +1,6 @@
 import math
 import random
-from LinkedList import LinkedList, Plant, Node
+from linkedlist import LinkedList, Plant, Node
 ####################################
 def esPrimo(n):
     if n <= 1:
@@ -36,6 +36,7 @@ class hash:
         for i in string[::-1]:
             hash = (hash*self.polynomial+(ord(i)-96))
         return (hash%self.primo)%self.espacio
+    
     def rehash(self):
         if self.elementos/ self.espacio > 0.5:
             self.espacio = self.espacio*2
@@ -47,8 +48,10 @@ class hash:
                 newhash.insert(self.polyhash(i.Name),i)
                 self.elementos += 1
             self.hashtable = newhash
+            
     def find(self, planta):
         return(self.hashtable[self.polyhash(planta.Name)])
+    
     def insert(self, planta):
         if self.hashtable[self.polyhash(planta.Name)] == 0:
             list = LinkedList()
@@ -59,6 +62,7 @@ class hash:
         else:
             self.hashtable[self.polyhash(planta.Name)].pushBack(planta)
             self.elementos += 1
+            
     def remove(self, planta):
         if self.hashtable[self.polyhash(planta.Name)].len() == 1:
             self.hashtable[self.polyhash(planta.Name)] = 0
