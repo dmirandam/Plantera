@@ -110,34 +110,6 @@ class Plant(LinkedList):
             paramTem.get(4).key = False
             paramTem.get(3).key = False
 
-    #Notificaciones, se organizan en colas
-    def notif(self):
-        pass
-        print("              ***NOTIFICACIONES***")
-        for i in self.cola:
-            if self.cola[i] == 0:
-                print("debes", i, "a", self.name)
-            else:
-                print("debes", i, "a", self.name, "tuviste que hacerlo hace:",
-                      self.cola[i], "horas")
-            self.cola[i] += 1
-
-    def Desnotif(self, a):
-        pass
-        for i in self.cola:
-            if a == i:
-                del self.cola[i]
-            print("           Has hecho", a, " a", self.name)
-            break
-        #Si se acaba de regar
-        else:
-          pass
-            #paramTem.get(2).key = 0
-            #paramTem.get(4).key = False
-            #paramTem.get(3).key = False
-
-    #Notificaciones, se organizan en colas
-    #def notif(str,num):
     
 class Person(LinkedList):
     def __init__(self):
