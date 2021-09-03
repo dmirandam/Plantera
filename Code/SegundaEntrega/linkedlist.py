@@ -76,10 +76,4 @@ class LinkedList: #Clase constructura para una lista simplemente enlazada
         val = val.next
       return num
 
-class Plant(LinkedList): #define la clase planta con sus distintos parámetros 
-    def __init__(self, n, np):
-        super().__init__()
-        self.Name = n  
-        self.NumberParam = np
-        #self.pushBack(p)  #parametros
-        #falta cola
+
