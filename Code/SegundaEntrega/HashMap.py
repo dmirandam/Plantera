@@ -1,6 +1,7 @@
 import math
 import random
-from linkedlist import LinkedList, Plant, Node
+from linkedlist import LinkedList, Node
+from Driver import Plant
 
 #-------------->
 def esPrimo(n):
@@ -20,7 +21,7 @@ def encontrar_primo():
         n += 1
     return n
 
-class Hash:
+class PolyHash:
     def __init__(self):
         self.Hashtable = [0]*100
         self.espacio = 100
@@ -35,8 +36,8 @@ class Hash:
     def polyHash(self, string):
         Hash = 0
         for i in string[::-1]:
-            Hash = (Hash*self.polynomial+(ord(i)-96))
-        return (Hash%self.primo)%self.espacio
+            Hash = (Hash*self.polynomial + (ord(i)-96)) % self.primo
+        return Hash%self.espacio
     
     def reHash(self):
         if self.elementos/ self.espacio > 0.5:
@@ -75,7 +76,7 @@ class Hash:
 
 ###test
 
-Hash = Hash()
+Hash = PolyHash()
 Hash.primo_polynomial()
 
 planta = Plant("rosa", 0)
