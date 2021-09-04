@@ -1,4 +1,3 @@
-
 class Node:
     def __init__(self, key=None):
         self.key = key
@@ -75,5 +74,3 @@ class LinkedList: #Clase constructura para una lista simplemente enlazada
         num += 1
         val = val.next
       return num
-
-
