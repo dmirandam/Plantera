@@ -1,13 +1,8 @@
 import math
 import random
 from linkedlist import LinkedList
-class Plant(LinkedList): #define la clase planta con sus distintos parámetros 
-    def __init__(self, n, np):
-        super().__init__()
-        self.Name = n  
-        self.NumberParam = np
-        #self.pushBack(p)  #parametros
-        #falta cola
+from Plant_Parameter import Plant
+
 #-------------->
 def esPrimo(n):
     if n <= 1:
