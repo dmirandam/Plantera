@@ -3,9 +3,10 @@ class Node:
         self.key = key
         self.next = None
         self.previous = None
-class LinkedList: #Clase constructura para una lista simplemente enlazada
+class LinkedList: #Clase constructora para una lista simplemente enlazada
     def __init__(self):
         self.head = None
+        self.length = 0
     
     def add(self, index, key): #añadir nodo en posicion especifica 
         var = self.head
@@ -28,6 +29,8 @@ class LinkedList: #Clase constructura para una lista simplemente enlazada
                 var.next.previous = newNode
             newNode.previous = var
             var.next = newNode
+        self.length += 1
+            
 
     def get(self, index): #
         val = self.head
@@ -41,8 +44,11 @@ class LinkedList: #Clase constructura para una lista simplemente enlazada
         for i in range(index):
             if (var.next == None):
                 raise IndexError
+                return
             var = var.next
-        if (var == None): raise IndexError
+        if (var == None): 
+            raise IndexError
+            return
         tem = var
         if (index == 0):
             self.head = self.head.next
@@ -50,7 +56,7 @@ class LinkedList: #Clase constructura para una lista simplemente enlazada
             var.previous.next = var.next
         if (tem.next):
             var.next.previous = tem.previous
-
+        self.length -= 1
         return tem
 
     def pushBack(self, key): #añade un elemento en la ultima posición
@@ -65,6 +71,7 @@ class LinkedList: #Clase constructura para una lista simplemente enlazada
 
             val.next = NewNode
             NewNode.previous = val
+        self.length += 1
 
   
     def len(self):

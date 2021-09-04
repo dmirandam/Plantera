@@ -9,7 +9,7 @@ from HashMap import Hash
 hashmap = Hash()
 hashmap.Primo_Polynomial()
 
-def agregar_planta():
+def Plant_Create():
     print("Hola, vamos a indexar una nueva planta")
     namePlant = input("¿Cómo se llama la nueva planta? ")
     numParam = int(input("¿Cuántos parámetros tiene la nueva planta? "))
@@ -20,15 +20,31 @@ def agregar_planta():
         frequencyParameter = int(input("¿Cada cuántas horas se lleva a cabo " + nameParameter + "? "))
         parameter = Parameter(nameParameter, frequencyParameter)
         Plant1.pushBack(parameter)
-    hashmap.insert(Plant1)
-    #person1.Create(Plant1)
+    hashmap.Insert(Plant1.Name)
+    return Plant1
 
-def eliminar_planta(Plant_Name):
-    hashmap.Remove(Plant_Name)
-    pass
+def Plant_Read(Plant):
+    print(Plant.Name, "tiene", Plant.length, "parámetros:")
+    print("Nombre   Frecuencia   Próxima acción")
+    var = Plant.head
+    while var != None:
+        x = var.key #Parámetro
+        print(x.Name, "  ", x.Frequency, "  ", x.Next)
+        var = var.next
+    print(" ")
+
+def Plant_Update(Plant):
     
+    pass
 
+def Plant_Delete(Plant):
+    hashmap.Remove(Plant.Name)
+  
+#------>
 
-
-agregar_planta()
+Plant = Plant_Create()
 print(hashmap.Hashtable)
+Plant_Read(Plant)
+Plant_Delete(Plant)
+print(hashmap.Hashtable)
+
