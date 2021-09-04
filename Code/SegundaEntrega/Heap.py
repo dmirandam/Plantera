@@ -2,7 +2,8 @@
 """
 MinHeap
 """
-import sys, numpy
+#import sys, 
+import numpy
 from Plant_Parameter import Parameter
 
 #--------> Classes

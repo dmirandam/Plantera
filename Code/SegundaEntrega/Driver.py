@@ -6,7 +6,8 @@ from Plant_Parameter import Plant, Parameter
 from Heap import MinHeap
 from HashMap import Hash
 
-
+hashmap = Hash()
+hashmap.Primo_Polynomial()
 
 def agregar_planta():
     print("Hola, vamos a indexar una nueva planta")
@@ -22,8 +23,12 @@ def agregar_planta():
     hashmap.insert(Plant1)
     #person1.Create(Plant1)
 
+def eliminar_planta(Plant_Name):
+    hashmap.Remove(Plant_Name)
+    pass
+    
 
-hashmap = Hash()
-hashmap.primo_polynomial()
+
+
 agregar_planta()
 print(hashmap.Hashtable)

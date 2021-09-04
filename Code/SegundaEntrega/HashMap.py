@@ -4,7 +4,7 @@ from linkedlist import LinkedList
 from Plant_Parameter import Plant
 
 #-------------->
-def esPrimo(n):
+def EsPrimo(n):
     if n <= 1:
         return False
     if math.sqrt(n).is_integer():
@@ -14,10 +14,10 @@ def esPrimo(n):
             return False
     return True
 
-def encontrar_primo():
+def Encontrar_Primo():
     x = 27**6
     n = random.randint(x, x+(10**10))
-    while esPrimo(n) == False:
+    while EsPrimo(n) == False:
         n += 1
     return n
 
@@ -29,17 +29,17 @@ class Hash:
         self.primo = 0
         self.polynomial = 0
 
-    def primo_polynomial(self):
-        self.primo = encontrar_primo()
+    def Primo_Polynomial(self):
+        self.primo = Encontrar_Primo()
         self.polynomial = random.randint(1, self.primo-1)
 
-    def polyHash(self, string):
+    def PolyHash(self, string):
         Hash = 0
         for i in string[::-1]:
-            Hash = (Hash*self.polynomial+(ord(i)-96))
-        return (Hash%self.primo)%self.espacio
+            Hash = (Hash*self.polynomial+(ord(i)-96))%self.primo
+        return Hash%self.espacio
     
-    def reHash(self):
+    def ReHash(self):
         if self.elementos/ self.espacio > 0.5:
             self.espacio = self.espacio*2
             newHash = [0]*self.espacio
@@ -47,33 +47,33 @@ class Hash:
             for i in self.Hashtable:
                 if i == 0:
                     continue
-                newHash.insert(self.polyHash(i.Name),i)
+                newHash.Insert(self.PolyHash(i.Name),i)
                 self.elementos += 1
             self.Hashtable = newHash
             
-    def find(self, planta):
-        return(self.Hashtable[self.polyHash(planta.Name)])
+    def Find(self, string):
+        return(self.Hashtable[self.PolyHash(string)])
     
-    def insert(self, planta):
-        if self.Hashtable[self.polyHash(planta.Name)] == 0:
+    def Insert(self, string):
+        if self.Hashtable[self.PolyHash(string)] == 0:
             list = LinkedList()
-            list.pushBack(planta)
-            self.Hashtable[self.polyHash(planta.Name)] = list
+            list.pushBack(string)
+            self.Hashtable[self.PolyHash(string)] = list
             self.elementos += 1
-            self.reHash()
+            self.ReHash()
         else:
-            self.Hashtable[self.polyHash(planta.Name)].pushBack(planta)
+            self.Hashtable[self.PolyHash(string)].pushBack(string)
             self.elementos += 1
             
-    def remove(self, planta):
-        if self.Hashtable[self.polyHash(planta.Name)].len() == 1:
-            self.Hashtable[self.polyHash(planta.Name)] = 0
+    def Remove(self, string):
+        if self.Hashtable[self.PolyHash(string)].len() == 1:
+            self.Hashtable[self.PolyHash(string)] = 0
         else:
-            for i in range(self.Hashtable[self.polyHash(planta.Name)].len()-1):
-                if self.Hashtable[self.polyHash(planta.Name)].get(i).key.Name == planta.Name:
-                    self.Hashtable[self.polyHash(planta.Name)].remove(i)
+            for i in range(self.Hashtable[self.PolyHash(string)].len()-1):
+                if self.Hashtable[self.PolyHash(string)].get(i).key.Name == string:
+                    self.Hashtable[self.PolyHash(string)].Remove(i)
         self.elementos -= 1
 hashMap =  Hash()
-hashMap.primo_polynomial()
+hashMap.Primo_Polynomial()
 planta1 = Plant("rosa", 1)
-hashMap.insert(planta1)
+hashMap.Insert(planta1.Name)
