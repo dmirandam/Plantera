@@ -27,6 +27,7 @@ class PolyHash:
         self.elementos = 1
         self.primo = 0
         self.polynomial = 0
+        self.elementList = LinkedList()
 
     def Primo_Polynomial(self):
         self.primo = Encontrar_Primo()
@@ -54,6 +55,7 @@ class PolyHash:
         return(self.Hashtable[self.PolyHash(planta.Name)])
     
     def Insert(self, planta):
+        self.elementList.pushBack(planta)
         if self.Hashtable[self.PolyHash(planta.Name)] == 0:
             list = LinkedList()
             list.pushBack(planta)
@@ -65,14 +67,19 @@ class PolyHash:
             self.elementos += 1
             
     def Remove(self, planta):
-        if self.Hashtable[self.PolyHash(planta.Name)].len() == 1:
+        if self.elementList.delete(planta) == False: return 
+        if self.Hashtable[self.PolyHash(planta.Name)].length == 1:
             self.Hashtable[self.PolyHash(planta.Name)] = 0
         else:
             for i in range(self.Hashtable[self.PolyHash(planta.Name)].len()-1):
                 if self.Hashtable[self.PolyHash(planta.Name)].get(i).key.Name == planta.Name:
                     self.Hashtable[self.PolyHash(planta.Name)].remove(i)
         self.elementos -= 1
+"""
 hashMap =  PolyHash()
 hashMap.Primo_Polynomial()
 planta1 = Plant("rosa")
 hashMap.Insert(planta1)
+print(hashMap.Remove(planta1))
+print(hashMap.Hashtable)
+"""

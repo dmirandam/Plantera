@@ -5,19 +5,13 @@ import time
 from Plant_Parameter import Plant, Parameter
 from Heap import MinHeap
 from HashMap import PolyHash
+from Queue import Queue
 
-class Queue():
-    def __init__(self):
-        self.cola = []
-    def pushBack(self, value):
-        self.cola.insert(len(self.cola), value)
-    def PopFront(self):
-        self.cola.pop(0)
 
 hashmap = PolyHash()
 hashmap.Primo_Polynomial()
 tasks = MinHeap(24)
-notifications = Queue
+notifications = Queue()
 
 def Plant_Create():
     global hashmap
@@ -58,9 +52,9 @@ def Plant_Update(plant):
         "\n No hacer cambios (2)")
     ans = int(input())
     if ans == 0:
-        hashmap.Remove(plant.Name)
+        hashmap.Remove(plant)
         plant.Name = input("Escribe el nuevo nombre de la planta")
-        hashmap.Insert(plant.Name)
+        hashmap.Insert(plant)
     elif ans == 1:
         Plant_Read(plant)
         par_number = int(input("¿Cuál es el número del parámetro que desea actualizar? "))
@@ -91,11 +85,12 @@ def Plant_Update(plant):
                 tasks.ChangePriority(p, x) 
             
 def Plant_Delete(plant):
-    hashmap.Remove(plant.Name)
+    hashmap.Remove(plant)
     var = plant.head
     while var != None:
         tasks.Remove(var.key.Next)
         var = var.next
+        
 def actualizar(heap, queue):
     global start_time
     if heap.H[0].Next <= start_time: #como acceder al primer nodo
@@ -116,7 +111,14 @@ def revisar_notification(heap, queue):
                 notif = queue.PopFront()
                 notif.Next = notif.Frequency + start_time
                 queue.PushBack(notif)
-
+def Person_Read():
+    for i in range(len(hashmap.Hashtable)):
+        if hashmap.Hashtable[i] == 0:
+            continue
+        else:
+            for j in range(hashmap.Hashtable[i].length):
+                print(str(j+1) + '. ' + hashmap.Hashtable[i].get(j).key.Name)
+    
 
 #------> while temporal
 planta = Plant("rosa")
@@ -124,46 +126,35 @@ hashmap.Insert(planta)
 print(hashmap.Hashtable)
 start_time = time.time()
 while True:
-    a = input("Quiere cambiar algo?: \n (1) Si \n (2) No \n")
+    a = input("Quiere editar alguna planta?: \n (1) Sí \n (2) No \n")
     if a == "1":
-        b = input("Seleccione que quiere modificar\n (1) Eliminar Planta \n (2)Agregar planta \n(3) Modificar planta \n (4) nada xd \n")
-        if b == "1":
+        print("Seleccione que quiere hacer",
+                  "\n (1) Eliminar Planta",
+                  "\n (2) Agregar planta",
+                  "\n (3) Modificar planta",
+                  "\n (4) nada xd \n")
+        b = input()
+        if b == "1": #EliminarPlanta
             print("Seleccione la planta que desea eliminar")
-            l = []
-            for i in range(len(hashmap.Hashtable)):
-                if hashmap.Hashtable[i] == 0:
-                    continue
-                else:
-                    for j in range(hashmap.Hashtable[i].len()):
-                        l.append(hashmap.Hashtable[i].get(j).key.Name)
-            for i in range(len(l)):
-                print(str(i+1) + '. ' + l[i])
+            Person_Read()
             c = int(input())
-            hashmap.Remove(l[c-1])
-            print(hashmap.Hashtable)
-        elif b == "2":
+            plant = hashmap.elementList.get(c)
+            Plant_Delete(plant)
+            #print(hashmap.Hashtable)
+        elif b == "2":#CrearPlanta
             Plant_Create()
-        elif b == "3":
+        elif b == "3":#UpdatePlanta
             print("Seleccione la planta que desea modificar")
-            l = []
-            for i in range(len(hashmap.Hashtable)):
-                if hashmap.Hashtable[i] == 0:
-                    continue
-                else:
-                    for j in range(hashmap.Hashtable[i].len()):
-                        l.append(hashmap.Hashtable[i].get(j).key.Name)
-            for i in range(len(l)):
-                print(str(i+1) + '. ' + l[i])
-            c = input()
+            Person_Read()
+            c = int(input())
+            plant = hashmap.elementList.get(c)
             if len(hashmap.Hashtable[hashmap.PolyHash(l[c])]) == 1:
-                arreglar = "esto xfa" 
                 #Plant_update(hashmap.Hashtable[hashmap.PolyHash(c)])
+                pass
             else:
                 for i in range(hashmap.Hashtable[hashmap.PolyHash(l[c])].len()-1):
                     if hashmap.Hashtable[hashmap.PolyHash(l[c])].get(i).key.Name == l[c]:
-                        arreglar = "esto xfa"
                         #Plant_update(hashmap.Hashtable[hashmap.PolyHash(l[c])]).key)
-        elif b == "4":
-            continue
+        
 ##comparacion
     actualizar(tasks, notifications)
