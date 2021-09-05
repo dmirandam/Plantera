@@ -59,6 +59,8 @@ class MinHeap:
         self.size -= 1
         self.SiftDown(1)
         return result
+    def Min(self):
+        return self.H[1]
     
     def Remove(self, i):
         self.H[i].Next = 0
