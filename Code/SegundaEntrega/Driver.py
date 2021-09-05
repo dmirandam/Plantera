@@ -6,12 +6,13 @@ from Plant_Parameter import Plant, Parameter
 from Heap import MinHeap
 from HashMap import PolyHash
 from Queue import Queue
+from linkedlist import LinkedList
 
-
+global start_time
 hashmap = PolyHash()
 hashmap.Primo_Polynomial()
 tasks = MinHeap(24)
-notifications = Queue()
+notifications = LinkedList()
 
 def Plant_Create():
     global hashmap
@@ -19,14 +20,13 @@ def Plant_Create():
     namePlant = input("¿Cómo se llama la nueva planta? ")
     numParam = int(input("¿Cuántos parámetros tiene la nueva planta? "))
     Plant1 = Plant(namePlant) #Va a guardar todos los parámetros de la planta
-
     
     for i in range (numParam):
         print("¿Cómo se llama el parámetro " + str(i+1) + "? ")
         nameParameter = input()
         print("¿Cada cuántas horas se lleva a cabo ", nameParameter + "? ")
         frequencyParameter = int(input())
-        parameter_1 = Parameter(nameParameter, frequencyParameter)
+        parameter_1 = Parameter(nameParameter, frequencyParameter, Plant1)
         Plant1.pushBack(parameter_1)
         tasks.Insert(parameter_1)
     hashmap.Insert(Plant1)
@@ -91,26 +91,34 @@ def Plant_Delete(plant):
         tasks.Remove(var.key.Next)
         var = var.next
         
-def actualizar(heap, queue):
-    global start_time
+def Task_Update(heap, queue):
     if heap.H[0].Next <= start_time: #como acceder al primer nodo
         queue.PushBack(heap.ExtractMin())
-        actualizar(heap, queue)
-    revisar_notification(queue)
+        Task_Update(heap, queue)
 
-def revisar_notification(heap, queue):
-    if len(queue.cola) == 0:
+def Notif_Read(queue):
+    var = queue.head
+    for i in range(queue.lenght):
+        print(i, var.key.Plant, var.key.Name)
+        var = var.next
+
+def Notif_Update(heap, queue):
+    if queue.lenght == 0:
         pass
     else:
-        for i in queue.cola:
-            a = input("debes", queue.cola[0], "\n (1) ya lo hice \n (2) lo hago despues")  #se necesita un apuntador a la planta
-            if a == "1":
-                notif = queue.PopFront()
-                heap.insert(notif)
-            elif a == "2":
-                notif = queue.PopFront()
-                notif.Next = notif.Frequency + start_time
-                queue.PushBack(notif)
+        Notif_Read(queue)
+        print("¿Realizó alguna tarea?",
+              "\n (1) Sí",
+              "\n (2) No")
+        ans = int(input())
+        if ans == 1:
+            print("¿Cuál es el número de la tarea que llevo a cabo")
+            num = int(input())
+            a = queue.remove(num)
+            a.Next = a.Frequency + 23 #*current time
+            heap.Insert(a)
+            Notif_Update
+        
 def Person_Read():
     for i in range(len(hashmap.Hashtable)):
         if hashmap.Hashtable[i] == 0:
@@ -121,9 +129,7 @@ def Person_Read():
     
 
 #------> while temporal
-planta = Plant("rosa")
-hashmap.Insert(planta)
-print(hashmap.Hashtable)
+Plant_Create()
 start_time = time.time()
 while True:
     a = input("Quiere editar alguna planta?: \n (1) Sí \n (2) No \n")
@@ -148,13 +154,8 @@ while True:
             Person_Read()
             c = int(input())
             plant = hashmap.elementList.get(c)
-            if len(hashmap.Hashtable[hashmap.PolyHash(l[c])]) == 1:
-                #Plant_update(hashmap.Hashtable[hashmap.PolyHash(c)])
-                pass
-            else:
-                for i in range(hashmap.Hashtable[hashmap.PolyHash(l[c])].len()-1):
-                    if hashmap.Hashtable[hashmap.PolyHash(l[c])].get(i).key.Name == l[c]:
-                        #Plant_update(hashmap.Hashtable[hashmap.PolyHash(l[c])]).key)
+            Plant_Update(plant)
         
 ##comparacion
-    actualizar(tasks, notifications)
+    Task_Update(tasks, notifications)
+    Notif_Update

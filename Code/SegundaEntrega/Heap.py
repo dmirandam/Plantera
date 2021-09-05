@@ -73,14 +73,3 @@ class MinHeap:
         else:
             self.SiftDown(i)
 
-#--------> Driver
-
-maxi = MinHeap(24)#sys.getsizeof(int()))
-for i in [12,10,8,6,4,2,0]:
-
-    parameter_i = Parameter(str(i),i)
-    maxi.Insert(parameter_i)
-
-maxi.ExtractMin()
-maxi.ExtractMin()
-maxi.Remove(6)
