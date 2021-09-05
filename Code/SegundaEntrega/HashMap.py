@@ -51,9 +51,13 @@ class PolyHash:
                 self.elementos += 1
             self.Hashtable = newHash
             
-    def Find(self, planta):
-        return(self.Hashtable[self.PolyHash(planta.Name)])
-    
+    def Find(self, string):
+            if self.Hashtable[self.PolyHash(string)].len() == 1:
+                return self.Hashtable[self.PolyHash(string)].get(0)
+            else:
+                for i in range(self.Hashtable[self.PolyHash( string)].len()-1):
+                    if self.Hashtable[self.PolyHash( string)].get(i).key.Name ==  string:
+                        return self.Hashtable[self.PolyHash(string)].get(i-1)
     def Insert(self, planta):
         self.elementList.pushBack(planta)
         if self.Hashtable[self.PolyHash(planta.Name)] == 0:
@@ -67,19 +71,18 @@ class PolyHash:
             self.elementos += 1
             
     def Remove(self, planta):
-        if self.elementList.delete(planta) == False: return 
-        if self.Hashtable[self.PolyHash(planta.Name)].length == 1:
+        if self.Hashtable[self.PolyHash(planta.Name)].len() == 1:
             self.Hashtable[self.PolyHash(planta.Name)] = 0
         else:
             for i in range(self.Hashtable[self.PolyHash(planta.Name)].len()-1):
                 if self.Hashtable[self.PolyHash(planta.Name)].get(i).key.Name == planta.Name:
                     self.Hashtable[self.PolyHash(planta.Name)].remove(i)
         self.elementos -= 1
-"""
+
 hashMap =  PolyHash()
 hashMap.Primo_Polynomial()
 planta1 = Plant("rosa")
 hashMap.Insert(planta1)
-print(hashMap.Remove(planta1))
 print(hashMap.Hashtable)
-"""
+
+print(hashMap.Find("rosa"))
