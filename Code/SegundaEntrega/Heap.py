@@ -47,27 +47,29 @@ class MinHeap:
             self.SiftDown(minIndex)
     
     def Insert(self, p):
-        if self.size == self.maxSize:
-            return #
         self.size += 1
         self.H[self.size] = p
         self.SiftUp(self.size)
         
     def ExtractMin(self):
+        if self.H[1] == None : return None
         result = self.H[1].Next
-        self.H[1].Next = self.H[self.size].Next
+        self.H[1] = self.H[self.size]
         self.size -= 1
         self.SiftDown(1)
         return result
+    
     def Min(self):
         return self.H[1]
     
     def Remove(self, i):
+        if self.H[1] == None : return None
         self.H[i].Next = 0
         self.SiftUp(i)
         self.ExtractMin()
         
     def ChangePriority(self, i, p):
+        if self.H[i] == None : return None
         oldp = self.H[i].Next
         self.H[i].Next = p
         if p > oldp:

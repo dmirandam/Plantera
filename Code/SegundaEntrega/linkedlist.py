@@ -33,7 +33,7 @@ class LinkedList: #Clase constructora para una lista simplemente enlazada
     def get(self, index): #
         val = self.head
         for i in range(index):
-            if (val == None): return
+            if (val == None): return None
             val = val.next
         return val
 

@@ -91,7 +91,7 @@ def Plant_Delete(plant):
         
 def Task_Update(heap, l_list):
     if heap.Min() == None: return
-    if heap.Min().Next <= start_time: #como acceder al primer nodo
+    if heap.Min().Next <= time.time() - start_time: #como acceder al primer nodo
         l_list.pushBack(heap.ExtractMin())
         Task_Update(heap, l_list)
 
@@ -130,7 +130,10 @@ def Person_Read():
 #------> while temporal
 
 start_time = time.time()
+i = 0
 while True:
+    print("Hora:", i, time.time()- start_time)
+    i += 1
     a = input("Quiere editar alguna planta?: \n (1) Sí \n (2) No \n")
     if a == "1":
         print("Seleccione que quiere hacer",
@@ -140,20 +143,31 @@ while True:
                   "\n (4) nada xd \n")
         b = input()
         if b == "1": #EliminarPlanta
-            print("Seleccione la planta que desea eliminar")
-            Person_Read()
-            c = int(input())
-            plant = hashmap.elementList.get(c).key
-            Plant_Delete(plant)
-            #print(hashmap.Hashtable)
+            if hashmap.elementList.head == None:
+                print("No hay plantas guardadas")
+            else:
+                print("Seleccione la planta que desea eliminar")
+                Person_Read()
+                c = int(input())
+                if hashmap.elementList.lenght <= c:
+                    print("Planta no existe")
+                plant_node = hashmap.elementList.get(c)
+                Plant_Delete(plant_node.key)
+                #print(hashmap.Hashtable)
         elif b == "2":#CrearPlanta
             Plant_Create()
         elif b == "3":#UpdatePlanta
-            print("Seleccione la planta que desea modificar")
-            Person_Read()
-            c = int(input())
-            plant = hashmap.elementList.get(c).key
-            Plant_Update(plant)
+            if hashmap.elementList.head == None:
+                print("No hay plantas guardadas")
+            else:
+                print("Seleccione la planta que desea eliminar")
+                print("Seleccione la planta que desea modificar")
+                Person_Read()
+                c = int(input())
+                if hashmap.elementList.lenght <= c:
+                    print("Planta no existe")
+                plant_node = hashmap.elementList.get(c)
+                Plant_Update(plant_node.key)
         
 ##comparacion
     Task_Update(tasks, notifications)
