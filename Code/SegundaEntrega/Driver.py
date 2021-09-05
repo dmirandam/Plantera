@@ -91,7 +91,7 @@ def Plant_Delete(plant):
         
 def Task_Update(heap, l_list):
     if heap.Min() == None: return
-    if heap.Min().Next <= time.time() - start_time: #como acceder al primer nodo
+    if heap.Min().Next <= hour: #como acceder al primer nodo
         l_list.pushBack(heap.ExtractMin())
         Task_Update(heap, l_list)
 
@@ -129,11 +129,10 @@ def Person_Read():
 
 #------> while temporal
 
-start_time = time.time()
-i = 0
+hour = -1
 while True:
-    print("Hora:", i, time.time()- start_time)
-    i += 1
+    hour += 1
+    print("Hora:", hour)
     a = input("Quiere editar alguna planta?: \n (1) Sí \n (2) No \n")
     if a == "1":
         print("Seleccione que quiere hacer",
