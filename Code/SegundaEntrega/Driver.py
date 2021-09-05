@@ -4,9 +4,9 @@ Plant class and Driver
 
 from Plant_Parameter import Plant, Parameter
 from Heap import MinHeap
-from HashMap import Hash
+from HashMap import PolyHash
 
-hashmap = Hash()
+hashmap = PolyHash()
 hashmap.Primo_Polynomial()
 tasks = MinHeap(24)
 
@@ -17,14 +17,14 @@ def Plant_Create():
     Plant1 = Plant(namePlant) #Va a guardar todos los parámetros de la planta
     
     for i in range (numParam):
-        print("¿Cómo se llama el parámetro " + str(i) + "? ")
+        print("¿Cómo se llama el parámetro " + str(i+1) + "? ")
         nameParameter = input()
         print("¿Cada cuántas horas se lleva a cabo ", nameParameter + "? ")
         frequencyParameter = int(input())
         parameter_1 = Parameter(nameParameter, frequencyParameter)
         Plant1.pushBack(parameter_1)
         tasks.Insert(parameter_1)
-    hashmap.Insert(Plant1.Name)
+    hashmap.Insert(Plant1)
     return Plant1
 
 def Plant_Read(plant):
@@ -76,9 +76,7 @@ def Plant_Update(plant):
             elif oldf != parameter_1.Frequency:
                 p = oldn + parameter_1.Frequency - oldf
                 x = tasks.H.index(parameter_1)
-                tasks.ChangePriority(p, x)
-            
-            
+                tasks.ChangePriority(p, x) 
             
 def Plant_Delete(plant):
     hashmap.Remove(plant.Name)
@@ -86,8 +84,8 @@ def Plant_Delete(plant):
     while var != None:
         tasks.Remove(var.key.Next)
         var = var.next
-  
+
 #------>
+
 plant_1 = Plant_Create()
 Plant_Update(plant_1)
-
