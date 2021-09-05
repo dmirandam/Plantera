@@ -54,22 +54,22 @@ class PolyHash:
                         newHash.insert(self.PolyHash(self.Hashtable[i].get(0).key.Name),self.Hashtable[i])
                     else:
                         for j in range(self.Hashtable[i].length):
-                            newHash[self.PolyHash(self.Hashtable[i].get(j).key.Name)].PushBack(self.Hashtable[i].get(j).key)
+                            newHash[self.PolyHash(self.Hashtable[i].get(j).key.Name)].pushBack(self.Hashtable[i].get(j).key)
                     self.elementos += 1
                 else:
                     for j in range(self.Hashtable[i].length):
                         if newHash[self.PolyHash(self.Hashtable[i].get(j).key.Name)] == 0:
-                            newHash.insert(self.PolyHash(self.Hashtable[i].get(j).key.Name).self.Hashtable[i].get(j).key)
+                            newHash.insert(self.PolyHash(self.Hashtable[i].get(j).key.Name),self.Hashtable[i].get(j).key)
                             self.elementos += 1
                         else:
-                            newHash[self.PolyHash(self.Hashtable[i].get(j).key.Name)].PushBack(self.Hashtable[i].get(j).key)
+                            newHash[self.PolyHash(self.Hashtable[i].get(j).key.Name)].pushBack(self.Hashtable[i].get(j).key)
             self.Hashtable = newHash
             
     def Find(self, string):
             if self.Hashtable[self.PolyHash(string)].len() == 1:
                 return self.Hashtable[self.PolyHash(string)].get(0)
             else:
-                for i in range(self.Hashtable[self.PolyHash( string)].len()-1):
+                for i in range(self.Hashtable[self.PolyHash( string)].length-1):
                     if self.Hashtable[self.PolyHash( string)].get(i).key.Name ==  string:
                         return self.Hashtable[self.PolyHash(string)].get(i-1)
     def Insert(self, planta):
@@ -104,4 +104,4 @@ hash.Insert(planta1)
 planta1 = Plant("rosaaaaa")
 hash.Insert(planta1)
 print(hash.Hashtable)
-
+print(hash.Find("rosaa"))
