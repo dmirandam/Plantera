@@ -122,7 +122,7 @@ def Notif_Update():
             print("¿Cuál es el número de la tarea que llevo a cabo")
             num = int(input())
             a = l_list.remove(num)
-            a.Next = a.Frequency + time.time() - time.start()
+            a.Next = a.key.Frequency + hour
             tasks.Insert(a)
             Notif_Update()
         
