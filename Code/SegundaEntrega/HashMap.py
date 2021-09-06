@@ -1,3 +1,4 @@
+  
 from hashlib import algorithms_available
 import math
 import random
@@ -65,11 +66,12 @@ class PolyHash:
             self.Hashtable = newHash
             
     def Find(self, string):
-        ph_string = self.Hashtable[self.PolyHash(string)]
-        if ph_string == None: return
-        for i in range(ph_string.length-1):
-            if ph_string.get(i).key.Name ==  string:
-                return ph_string.get(i)
+            if self.Hashtable[self.PolyHash(string)].length == 1:
+                return self.Hashtable[self.PolyHash(string)].get(0).key
+            else:
+                for i in range(self.Hashtable[self.PolyHash( string)].length-1):
+                    if self.Hashtable[self.PolyHash( string)].get(i).key.Name ==  string:
+                        return self.Hashtable[self.PolyHash(string)].get(i-1).key
     
     def Insert(self, planta):
         if self.Hashtable[self.PolyHash(planta.Name)] == 0:
@@ -83,12 +85,14 @@ class PolyHash:
             self.elementos += 1
             
     def Remove(self, planta):
-        if self.Hashtable[self.PolyHash(planta.Name)].lenght == 1:
+        if self.Hashtable[self.PolyHash(planta.Name)].length == 1:
             self.Hashtable[self.PolyHash(planta.Name)] = 0
         else:
-            for i in range(self.Hashtable[self.PolyHash(planta.Name)].len()-1):
+            for i in range(self.Hashtable[self.PolyHash(planta.Name)].length-1):
                 if self.Hashtable[self.PolyHash(planta.Name)].get(i).key.Name == planta.Name:
                     self.Hashtable[self.PolyHash(planta.Name)].remove(i)
         self.elementos -= 1
+
+
 
 
