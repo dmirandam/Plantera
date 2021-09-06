@@ -17,14 +17,17 @@ from PyQt5.QtWidgets import (QApplication, QDialog, QPushButton, QTableWidget,
 hashmap = PolyHash()
 hashmap.Primo_Polynomial()
 
-
+start_time = time.time()
+hour = time.time() - start_time 
+cola_notif = []
 tasks = MinHeap(24)
-l_list = LinkedList()
-hour = -1
+nombres = []
+tareas = []
 ##NO BORRAR NO BORRAR NO BORRAR NO BORRARNO BORRAR NO BORRAR NO BORRAR NO BORRARNO BORRAR NO BORRAR NO BORRAR NO BORRAR
 
 ##NO BORRAR NO BORRAR NO BORRAR NO BORRARNO BORRAR NO BORRAR NO BORRAR NO BORRARNO BORRAR NO BORRAR NO BORRAR NO BORRARNO BORRAR NO BORRAR NO BORRAR NO BORRAR
 ##ventana principal
+
 class Ui_MainWindow(object):   
 
     def openWindow(self):
@@ -115,8 +118,7 @@ class Registrar_Planta(QDialog): #Esta clase define todos los parámetros de la 
     def AbrirRegistrarCliente(self):#Esta función se ejecuta al ser clicado "pushButton" y ejecuta la ventana registrocliente
         self.registrocliente.exec_()
 
-    def Confirmation(self):
-        
+    def Confirmation(self):        
         plant_Name = self.textEdit.toPlainText()
         planta1 = Plant(plant_Name)
         for i in self.registrocliente.parametros:
@@ -142,6 +144,7 @@ class Registrar_Planta(QDialog): #Esta clase define todos los parámetros de la 
         self.textEdit.setGeometry(QtCore.QRect(10, 40, 431, 31))
         self.textEdit.setObjectName("textEdit")
         self.textEdit.setText("Nombre Planta")
+
         self.setWindowTitle("Registro planta")
         self.label_2 = QtWidgets.QLabel(self)
         self.label_2.setGeometry(QtCore.QRect(100, 10, 271, 16))
@@ -299,13 +302,23 @@ class Editar_Planta(QDialog):
 
 class Eliminar_Planta(QDialog): ########
     global hashmap
+    global tasks
+
     def Confirmation(self):        
-        
         plant_Name = self.textEdit.toPlainText()
         planta1 = Plant(plant_Name)
         hashmap.Remove(planta1)
+        var = planta1.head
+        while var != None:
+            tasks.Remove(var.key.Next)
+            var = var.next
+
+        
+        
         self.textEdit.clear()
+        
         print(hashmap.Hashtable)
+        
         self.msg = QtWidgets.QMessageBox()
         self.msg.setInformativeText("Planta eliminada")
         self.msg.show()
@@ -401,22 +414,268 @@ class Actualizar_Planta(QDialog):
 
 #Notificaciones
 class Notificacion(QDialog):
+    global tasks
+    global cola_notif
+    global start_time
+    global nombres
+    global tareas
+    def Task_Update(self):
+        hour = time.time() - start_time 
+        if tasks.Min() == None: return
+        if tasks.Min().Next <= hour: 
+            a = tasks.ExtractMin()
+            cola_notif.append(a)
+            list(nombres)
+            list(tareas)
+            nombres.append(a.Plant.Name)
+            tareas.append(a.Name)
+            tasks.Remove(1)
+            self.Task_Update()
+            
+        else: 
+            pass
+        
+    def Abrir_tabla(self):
+        self.Mostrar.exec_()
+        
+
+    
     def __init__(self):
         QDialog.__init__(self)
         self.setObjectName("Dialog")
-        self.resize(400, 300)
-        self.label = QtWidgets.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(40, 100, 271, 171))
+        self.resize(200, 150)
         font = QtGui.QFont()
         font.setFamily("MS Serif")
         font.setPointSize(16)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-
+        self.pushButton = QtWidgets.QPushButton(self)
+        self.pushButton.setObjectName("nosee")
+        self.pushButton.setText("Mostrar notificaciones")
+        self.pushButton.setGeometry(QtCore.QRect(30, 50, 150, 60))
+        self.pushButton.clicked.connect(self.Task_Update)
+        self.pushButton.clicked.connect(self.Abrir_tabla)
         QtCore.QMetaObject.connectSlotsByName(self)
 
         self.setWindowTitle("Notificaciones")
-        self.label.setText("NOTIFICACIONES")
+
+        self.Mostrar = Mostrar_Notificacion()
+
+
+
+class Mostrar_Notificacion(QDialog):
+    global nombres
+    global tareas
+    def __init__(self, parent=None):
+        super(Mostrar_Notificacion, self).__init__(parent)
+
+        self.setWindowTitle("Tabla de notificaciones")
+        self.setWindowIcon(QIcon("Qt.png"))
+        self.setWindowFlags(Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint |
+                            Qt.MSWindowsFixedSizeDialogHint)
+        self.setFixedSize(740, 348)
+
+        self.initUI()
+
+    def initUI(self):
+
+      # ================== WIDGET  QTableWidget ==================
+      
+        self.tabla = QTableWidget(self)
+
+        # Deshabilitar edición
+        self.tabla.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        # Deshabilitar el comportamiento de arrastrar y soltar
+        self.tabla.setDragDropOverwriteMode(False)
+
+        # Seleccionar toda la fila
+        self.tabla.setSelectionBehavior(QAbstractItemView.SelectRows)
+
+        # Seleccionar una fila a la vez
+        self.tabla.setSelectionMode(QAbstractItemView.SingleSelection)
+
+        # Especifica dónde deben aparecer los puntos suspensivos "..." cuando se muestran
+        # textos que no encajan
+        self.tabla.setTextElideMode(Qt.ElideRight)# Qt.ElideNone
+
+        # Establecer el ajuste de palabras del texto 
+        self.tabla.setWordWrap(False)
+
+        # Deshabilitar clasificación
+        
+        
+        # Establecer el número de columnas
+        self.tabla.setColumnCount(2)
+
+        # Establecer el número de filas
+        self.tabla.setRowCount(0)
+
+        # Alineación del texto del encabezado
+        self.tabla.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter|Qt.AlignVCenter|
+                                                          Qt.AlignCenter)
+
+        # Deshabilitar resaltado del texto del encabezado al seleccionar una fila
+        self.tabla.horizontalHeader().setHighlightSections(False)
+
+        # Hacer que la última sección visible del encabezado ocupa todo el espacio disponible
+        self.tabla.horizontalHeader().setStretchLastSection(True)
+
+        # Ocultar encabezado vertical
+        self.tabla.verticalHeader().setVisible(False)
+
+        # Dibujar el fondo usando colores alternados
+        self.tabla.setAlternatingRowColors(True)
+
+        # Establecer altura de las filas
+        self.tabla.verticalHeader().setDefaultSectionSize(20)
+        
+        # self.tabla.verticalHeader().setHighlightSections(True)
+
+        
+        nombreColumnas = ("Planta","Tarea")
+
+        # Establecer las etiquetas de encabezado horizontal usando etiquetas
+        self.tabla.setHorizontalHeaderLabels(nombreColumnas)
+        
+        # Menú contextual
+        self.tabla.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.tabla.customContextMenuRequested.connect(self.menuContextual)
+        
+        # Establecer ancho de las columnas
+        for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
+            self.tabla.setColumnWidth(indice, ancho)
+
+        self.tabla.resize(700, 240)
+        self.tabla.move(20, 56)
+
+      # =================== WIDGETS QPUSHBUTTON ==================
+
+        botonMostrarDatos = QPushButton("Mostrar datos", self)
+        botonMostrarDatos.setFixedWidth(140)
+        botonMostrarDatos.move(20, 20)
+
+        menu = QMenu()
+        for indice, columna in enumerate(nombreColumnas, start=0):
+            accion = QAction(columna, menu)
+            accion.setCheckable(True)
+            accion.setChecked(True)
+            accion.setData(indice)
+
+            menu.addAction(accion)
+
+        botonMostrarOcultar = QPushButton("Motrar/ocultar columnas", self)
+        botonMostrarOcultar.setFixedWidth(180)
+        botonMostrarOcultar.setMenu(menu)
+        botonMostrarOcultar.move(170, 20)
+
+
+        botonCerrar = QPushButton("Cerrar", self)
+        botonCerrar.setFixedWidth(80)
+        botonCerrar.move(640, 306)
+
+      # ======================== EVENTOS =========================
+
+        botonMostrarDatos.clicked.connect(self.datosTabla)
+        
+       
+        botonCerrar.clicked.connect(self.close)
+
+        
+        menu.triggered.connect(self.mostrarOcultar)
+
+  # ======================= FUNCIONES ============================
+    def datosTabla(self):
+        global nombres
+        global tareas
+        nombres = tuple(nombres)
+        tareas = tuple(tareas)
+
+        datos = []
+        for i in range(len(nombres)):
+            par = []
+            par.append(nombres[i])
+            par.append(tareas[i])
+            par = tuple(par)
+            datos.append(par)
+        self.tabla.clearContents()
+
+        row = 0
+        for endian in datos:
+            self.tabla.setRowCount(row + 1)
+            
+            idDato = QTableWidgetItem(endian[0])
+            idDato.setTextAlignment(4)
+            
+            self.tabla.setItem(row, 0, idDato)
+            self.tabla.setItem(row, 1, QTableWidgetItem(endian[1]))
+
+
+
+            row += 1
+
+    def mostrarOcultar(self, accion):
+        columna = accion.data()
+        
+        if accion.isChecked():
+            self.tabla.setColumnHidden(columna, False)
+        else:
+            self.tabla.setColumnHidden(columna, True)
+
+    def eliminarFila(self):
+        filaSeleccionada = self.tabla.selectedItems()
+
+        if filaSeleccionada:
+            fila = filaSeleccionada[0].row()
+            self.tabla.removeRow(fila)
+
+            self.tabla.clearSelection()
+        else:
+            QMessageBox.critical(self, "Eliminar fila", "Seleccione una fila.   ",
+                                 QMessageBox.Ok)
+
+ 
+
+    def menuContextual(self, posicion):
+        indices = self.tabla.selectedIndexes()
+
+        if indices:
+            menu = QMenu()
+
+            itemsGrupo = QActionGroup(self)
+            itemsGrupo.setExclusive(True)
+            
+            menu.addAction(QAction("Copiar todo", itemsGrupo))
+
+            columnas = [self.tabla.horizontalHeaderItem(columna).text()
+                        for columna in range(self.tabla.columnCount())
+                        if not self.tabla.isColumnHidden(columna)]
+
+            copiarIndividual = menu.addMenu("Copiar individual") 
+            for indice, item in enumerate(columnas, start=0):
+                accion = QAction(item, itemsGrupo)
+                accion.setData(indice)
+                
+                copiarIndividual.addAction(accion)
+
+            itemsGrupo.triggered.connect(self.copiarTableWidgetItem)
+            
+            menu.exec_(self.tabla.viewport().mapToGlobal(posicion))
+
+    def copiarTableWidgetItem(self, accion):
+        filaSeleccionada = [dato.text() for dato in self.tabla.selectedItems()]
+            
+        if accion.text() == "Copiar todo":
+            filaSeleccionada = tuple(filaSeleccionada)
+        else:
+            filaSeleccionada = filaSeleccionada[accion.data()]
+
+        print(filaSeleccionada)
+
+        return
+
+
+
+
+
 
         
 if __name__ == "__main__":
@@ -427,6 +686,7 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
 
 
 
