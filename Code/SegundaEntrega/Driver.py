@@ -106,7 +106,7 @@ def Task_Update():
 def Notif_Read():
     var = l_list.head
     for i in range(l_list.length):
-        print(i, var.key.Plant, var.key.Name)
+        print(i, var.key.Plant.Name, var.key.Name)
         var = var.next
 
 def Notif_Update():
