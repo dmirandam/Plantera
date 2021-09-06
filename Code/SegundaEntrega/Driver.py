@@ -10,7 +10,19 @@ from linkedlist import LinkedList
 hashmap = PolyHash()
 hashmap.Primo_Polynomial()
 tasks = MinHeap(24)
-notifications = LinkedList()
+l_list = LinkedList()
+
+def Parameter_Create(Plant1):
+    print("¿Cómo se llama el parámetro? ")
+    nameParameter = input()
+    print("¿Cada cuántas horas se lleva a cabo ", nameParameter + "? ")
+    frequencyParameter = int(input())
+    parameter_1 = Parameter(nameParameter, 
+                            frequencyParameter,
+                            frequencyParameter + hour, 
+                            Plant1)
+    Plant1.pushBack(parameter_1)
+    tasks.Insert(parameter_1)
 
 def Plant_Create():
     global hashmap
@@ -20,15 +32,8 @@ def Plant_Create():
     Plant1 = Plant(namePlant) #Va a guardar todos los parámetros de la planta
     
     for i in range (numParam):
-        print("¿Cómo se llama el parámetro " + str(i+1) + "? ")
-        nameParameter = input()
-        print("¿Cada cuántas horas se lleva a cabo ", nameParameter + "? ")
-        frequencyParameter = int(input())
-        parameter_1 = Parameter(nameParameter, frequencyParameter, Plant1)
-        Plant1.pushBack(parameter_1)
-        tasks.Insert(parameter_1)
+        Parameter_Create(Plant1)
     hashmap.Insert(Plant1)
-    print(hashmap.Hashtable)
     return Plant1
 
 def Plant_Read(plant):
@@ -63,6 +68,7 @@ def Plant_Update(plant):
               "\n¿Qué desea hacer?",
               "\n Eliminar parámetro (0)"
               "\n Editar parámetro (1)",
+              "\n Añadir parámetro (2)"
               "\n Nada (4)")
         ans_1 = int(input())
         if ans_1 == 0:
@@ -75,12 +81,13 @@ def Plant_Update(plant):
             parameter_1.Next = input("Próxima acción: ")
             #Cambiar prioridad minheap
             if oldn != parameter_1.Next:
-                x = tasks.H.index(parameter_1)
-                tasks.ChangePriority(oldn, x)
+                tasks.ChangePriority(oldn, tasks.H.index(parameter_1))
             elif oldf != parameter_1.Frequency:
-                p = oldn + parameter_1.Frequency - oldf
-                x = tasks.H.index(parameter_1)
-                tasks.ChangePriority(p, x) 
+                tasks.ChangePriority(oldn + parameter_1.Frequency - oldf, 
+                                     tasks.H.index(parameter_1)) 
+        elif ans_1 == 2:
+            Parameter_Create(plant)
+            
             
 def Plant_Delete(plant):
     hashmap.Remove(plant)
@@ -89,23 +96,24 @@ def Plant_Delete(plant):
         tasks.Remove(var.key.Next)
         var = var.next
         
-def Task_Update(heap, l_list):
-    if heap.Min() == None: return
-    if heap.Min().Next <= hour: #como acceder al primer nodo
-        l_list.pushBack(heap.ExtractMin())
-        Task_Update(heap, l_list)
+def Task_Update():
+    if tasks.Min() == None: return
+    if tasks.Min().Next <= hour: 
+        l_list.pushBack(tasks.ExtractMin())
+        Task_Update()
+    else: pass
 
-def Notif_Read(l_list):
+def Notif_Read():
     var = l_list.head
-    for i in range(l_list.lenght):
+    for i in range(l_list.length):
         print(i, var.key.Plant, var.key.Name)
         var = var.next
 
-def Notif_Update(heap, l_list):
-    if l_list.lenght == 0:
+def Notif_Update():
+    if l_list.length == 0:
         pass
     else:
-        Notif_Read(l_list)
+        Notif_Read()
         print("¿Realizó alguna tarea?",
               "\n (1) Sí",
               "\n (2) No")
@@ -115,16 +123,18 @@ def Notif_Update(heap, l_list):
             num = int(input())
             a = l_list.remove(num)
             a.Next = a.Frequency + time.time() - time.start()
-            heap.Insert(a)
-            Notif_Update
+            tasks.Insert(a)
+            Notif_Update()
         
 def Person_Read():
     for i in range(len(hashmap.Hashtable)):
         if hashmap.Hashtable[i] == 0:
             continue
         else:
-            for j in range(hashmap.Hashtable[i].length):
-                print(str(j) + '. ' + hashmap.Hashtable[i].get(j).key.Name)
+            var = hashmap.Hashtable[i].head
+            while var != None:
+                print(var.key.Name)
+                var = var.next
     
 
 #------> while temporal
@@ -142,32 +152,32 @@ while True:
                   "\n (4) nada xd \n")
         b = input()
         if b == "1": #EliminarPlanta
-            if hashmap.elementList.head == None:
+            if hashmap.elementos == 1:
                 print("No hay plantas guardadas")
             else:
-                print("Seleccione la planta que desea eliminar")
                 Person_Read()
-                c = int(input())
-                if hashmap.elementList.lenght <= c:
+                print("Escriba el nombre de la planta a eliminar")
+                c = input()
+                plant_node = hashmap.Find(c)
+                if plant_node == None:
                     print("Planta no existe")
-                plant_node = hashmap.elementList.get(c)
-                Plant_Delete(plant_node.key)
+                else:
+                    Plant_Delete(plant_node.key)
                 #print(hashmap.Hashtable)
         elif b == "2":#CrearPlanta
             Plant_Create()
         elif b == "3":#UpdatePlanta
-            if hashmap.elementList.head == None:
+            if hashmap.elementos == 1:
                 print("No hay plantas guardadas")
             else:
-                print("Seleccione la planta que desea eliminar")
-                print("Seleccione la planta que desea modificar")
                 Person_Read()
-                c = int(input())
-                if hashmap.elementList.lenght <= c:
+                print("Escriba el nombre de la planta a editar")
+                c = input()
+                plant_node = hashmap.Find(c)
+                if plant_node == None:
                     print("Planta no existe")
-                plant_node = hashmap.elementList.get(c)
-                Plant_Update(plant_node.key)
-        
-##comparacion
-    Task_Update(tasks, notifications)
-    Notif_Update
+                else:
+                    Plant_Update(plant_node.key)
+#comparacion
+    Task_Update()
+    Notif_Update()

@@ -23,12 +23,11 @@ def Encontrar_Primo():
 
 class PolyHash:
     def __init__(self):
-        self.Hashtable = [0]*3
-        self.espacio = 3
+        self.Hashtable = [0]*100
+        self.espacio = 100
         self.elementos = 1
         self.primo = 0
         self.polynomial = 0
-        self.elementList = LinkedList()
 
     def Primo_Polynomial(self):
         self.primo = Encontrar_Primo()
@@ -66,14 +65,13 @@ class PolyHash:
             self.Hashtable = newHash
             
     def Find(self, string):
-            if self.Hashtable[self.PolyHash(string)].len() == 1:
-                return self.Hashtable[self.PolyHash(string)].get(0)
-            else:
-                for i in range(self.Hashtable[self.PolyHash( string)].length-1):
-                    if self.Hashtable[self.PolyHash( string)].get(i).key.Name ==  string:
-                        return self.Hashtable[self.PolyHash(string)].get(i-1)
+        ph_string = self.Hashtable[self.PolyHash(string)]
+        if ph_string == None: return
+        for i in range(ph_string.length-1):
+            if ph_string.get(i).key.Name ==  string:
+                return ph_string.get(i)
+    
     def Insert(self, planta):
-        self.elementList.pushBack(planta)
         if self.Hashtable[self.PolyHash(planta.Name)] == 0:
             list = LinkedList()
             list.pushBack(planta)
@@ -85,7 +83,7 @@ class PolyHash:
             self.elementos += 1
             
     def Remove(self, planta):
-        if self.Hashtable[self.PolyHash(planta.Name)].len() == 1:
+        if self.Hashtable[self.PolyHash(planta.Name)].lenght == 1:
             self.Hashtable[self.PolyHash(planta.Name)] = 0
         else:
             for i in range(self.Hashtable[self.PolyHash(planta.Name)].len()-1):
@@ -93,15 +91,4 @@ class PolyHash:
                     self.Hashtable[self.PolyHash(planta.Name)].remove(i)
         self.elementos -= 1
 
-hash = PolyHash()
-hash.Primo_Polynomial()
-planta1 = Plant("rosaa")
-hash.Insert(planta1)
-planta1 = Plant("rosaaa")
-hash.Insert(planta1)
-planta1 = Plant("rosaaaa")
-hash.Insert(planta1)
-planta1 = Plant("rosaaaaa")
-hash.Insert(planta1)
-print(hash.Hashtable)
-print(hash.Find("rosaa"))
+

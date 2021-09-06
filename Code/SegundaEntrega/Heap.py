@@ -53,7 +53,7 @@ class MinHeap:
         
     def ExtractMin(self):
         if self.H[1] == None : return None
-        result = self.H[1].Next
+        result = self.H[1]
         self.H[1] = self.H[self.size]
         self.size -= 1
         self.SiftDown(1)

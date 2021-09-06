@@ -12,8 +12,8 @@ class Plant(LinkedList): #define la clase planta con sus distintos parámetros
         #falta cola
         
 class Parameter():
-    def __init__(self, name, frequency, plant):
+    def __init__(self, name, frequency, next_, plant):
         self.Name = name 
         self.Frequency = frequency 
-        self.Next = self.Frequency
+        self.Next = next_
         self.Plant = plant
